@@ -35,6 +35,17 @@ Para iniciar la aplicación con interfaz gráfica, ejecute:
 streamlit run TranscriptorAV.py
 ```
 
+### Despliegue en Streamlit Cloud
+
+Para desplegar la aplicación en Streamlit Cloud:
+
+1. Crea una cuenta en [Streamlit Cloud](https://streamlit.io/cloud)
+2. Conecta tu repositorio de GitHub
+3. Selecciona el archivo `TranscriptorAV.py` como punto de entrada
+4. La aplicación se desplegará automáticamente
+
+La aplicación utiliza el archivo `packages.txt` para instalar FFmpeg en el entorno de Streamlit Cloud.
+
 ### Línea de comandos
 
 También puede usar la herramienta desde la línea de comandos:

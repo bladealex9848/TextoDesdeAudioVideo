@@ -7,8 +7,18 @@ import io
 import shutil
 import uuid
 import time
-from moviepy.editor import VideoFileClip
 import tempfile
+
+# Importación condicional de moviepy para evitar errores en Streamlit Cloud
+try:
+    from moviepy.editor import VideoFileClip
+
+    MOVIEPY_AVAILABLE = True
+except ImportError:
+    MOVIEPY_AVAILABLE = False
+    st.warning(
+        "La biblioteca moviepy no está disponible. Algunas funcionalidades de procesamiento de video estarán limitadas."
+    )
 
 # Configuración de Streamlit / Streamlit Configuration
 st.set_page_config(
@@ -29,8 +39,11 @@ st.set_page_config(
 )
 
 # Carga y muestra el logo de la aplicación / Load and show the application logo
-logo = Image.open("img/logo.png")
-st.image(logo, width=250)
+try:
+    logo = Image.open("img/logo.png")
+    st.image(logo, width=250)
+except Exception as e:
+    st.write("TranscriptorAV: Suite de Procesamiento de Audio y Video")
 
 
 # Funciones de internacionalización y manejo de errores / Internationalization and error handling functions
@@ -149,6 +162,9 @@ def get_text(text_key, lang):
 
 # Función para cambiar la resolución de un video / Function to change video resolution
 def change_video_resolution(uploaded_file, target_resolution, session_id, lang):
+    if not MOVIEPY_AVAILABLE:
+        return "Error: La biblioteca moviepy no está disponible", ""
+
     file_name_without_extension = os.path.splitext(uploaded_file.name)[0]
     file_extension = os.path.splitext(uploaded_file.name)[1]
     temp_dir = f"/tmp/{session_id}"
@@ -392,6 +408,9 @@ def batch_convert_videos_for_car(input_dir, output_dir, lang):
 
 # Función para convertir video a audio / Function to convert video to audio
 def convert_video_to_audio(uploaded_file, output_format, session_id, lang):
+    if not MOVIEPY_AVAILABLE:
+        return "Error: La biblioteca moviepy no está disponible", ""
+
     file_name_without_extension = os.path.splitext(uploaded_file.name)[0]
     temp_dir = f"/tmp/{session_id}"
     os.makedirs(temp_dir, exist_ok=True)
