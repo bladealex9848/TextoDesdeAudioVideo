@@ -134,3 +134,7 @@ Thumbs.db
 
 # Private files
 Base.py
+
+# Directorios
+videos_originales/
+videos_convertidos/

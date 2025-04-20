@@ -1,2 +1,7 @@
 streamlit
 git+https://github.com/openai/whisper.git
+moviepy
+pydub
+librosa
+soundfile
+ffmpeg-python
